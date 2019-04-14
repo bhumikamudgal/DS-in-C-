@@ -1,0 +1,42 @@
+#include <string>
+using namespace std;
+
+int keypad(int num, string output[], string dialer[]){
+    
+    if(num==0){
+        output[0]="";
+        return 1;
+    }
+    
+    int lastDigit=num%10;
+    int smallInput= num/10;
+    string smallOutput[10000];
+    
+    int smallOutputSize = keypad(smallInput, smallOutput, dialer);
+    string op = dialer[lastDigit];
+    int k=0;
+    for(int i=0;i<op.size();i++){
+        for(int j=0;j<smallOutputSize;j++){
+            
+            output[k++]=smallOutput[j]+op[i];
+        }
+    }
+    return k;
+}
+int keypad(int num, string output[]) {
+	string dialer[] = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    
+    return keypad(num, output, dialer);
+}
+
+int main(){
+    int num;
+    cin >> num;
+
+    string output[10000];
+    int count = keypad(num, output);
+    for(int i = 0; i < count && i < 10000; i++){
+        cout << output[i] << endl;
+    }
+    return 0;
+}
