@@ -1,3 +1,5 @@
+#include <iostream>
+using namespace std;
 bool checkAB(char input[]) {
 	char* t = input;
     
@@ -27,4 +29,15 @@ bool checkAB(char input[]) {
             return 0;
     }
 
+}
+
+int main() {
+    char input[100];
+    bool ans;
+    cin >> input;
+    ans=checkAB(input);
+    if(ans)
+        cout<< "true" << endl;
+    else
+        cout<< "false" << endl;
 }
