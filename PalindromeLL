@@ -1,0 +1,113 @@
+//Check if a linked list is a palindrome
+#include <iostream>
+class node{
+public:
+    int data;
+    node * next;
+    node(int data){
+        this->data=data;
+        this->next=NULL;
+    }
+};
+using namespace std;
+node* takeinput(){
+    int data;
+    cin>>data;
+    node* head=NULL,*tail=NULL;
+    while(data!=-1){
+        node *newnode=new node(data);
+        if(head==NULL)                  {
+            head=newnode;
+            tail=newnode;
+        }
+        else{
+            tail->next=newnode;
+            tail=newnode;
+        }
+        cin>>data;
+    }
+    return head;
+}
+void print(node *head)
+{
+    node*temp=head;
+    while(temp!=NULL)
+    {
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+
+int length(node* head){
+    int count = 0;
+    node* temp = head;
+    while(temp!=NULL){
+        count++;
+        temp= temp->next;
+    }
+    return count;
+}
+
+node* reverse(node* head){
+    node* cur = head;
+    node* prev = NULL;
+    node* next = NULL;
+
+    while(cur!=NULL){
+        next=cur->next;
+        cur->next=prev;
+        prev=cur;
+        cur=next;
+    }
+    head = prev;
+    return head;
+
+}
+
+bool check_palindrome(node* head)
+{
+    node* temp1 = head;
+    node* temp2 = NULL;
+    node* head2 = NULL;
+    int len = length(head);
+    int mid= len/2;
+    if(len==1){
+        return true;
+    }
+    for(int i=0;i<mid-1;i++){
+        temp1=temp1->next;
+    }
+    if(len%2==0){
+        head2 = temp1->next;
+    }
+    else{
+        head2 = temp1;
+    }
+    
+    head2 = reverse(head2);
+    temp2=head2;
+    temp1=head;
+    while(temp1!=NULL&&temp2!=NULL){
+        if(temp1->data!=temp2->data){
+            return false;
+        }
+        else{
+            temp1=temp1->next;
+            temp2=temp2->next;
+        }
+        
+    }
+    return true;
+}
+
+int main()
+{
+    node*head=takeinput();
+    bool ans=check_palindrome(head);
+    if(ans)
+        cout<<"true";
+    else 
+        cout << "false";
+    return 0;
+}
