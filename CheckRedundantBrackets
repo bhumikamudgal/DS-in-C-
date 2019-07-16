@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+#include <stack>
+
+bool checkRedundantBrackets(char *input) {
+	stack<char> s;
+    int i=0,j=0;
+    int count =0;
+    while(input[i]!='\0'){
+    while(input[i]!=')'){
+        if(input[i] == '\0'){
+            return false;
+        }
+        s.push(input[i]);
+        i++;
+    }
+    if(input[i]==')'){
+        if(s.empty())
+            return false;
+        while(s.top()!='('){
+        s.pop();
+        count++;
+        }
+        if(count==0){
+            return true;
+        }
+        else{
+            s.pop();
+            count = 0;
+        }
+    }
+        i++;
+    }   
+    return false;
+}
+
+int main() {
+    char input[1000000];
+    cin.getline(input, 1000000);
+
+    if(checkRedundantBrackets(input)) {
+	    cout << "true" << endl;
+    }
+    else {
+	    cout << "false" << endl;
+    }
+
+}
