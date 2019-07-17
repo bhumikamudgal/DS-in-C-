@@ -1,0 +1,74 @@
+#include<iostream>
+#include<queue>
+#include<vector>
+using namespace std;
+
+template <typename T>
+class TreeNode{
+public:
+    T data;
+    vector<TreeNode*> children;
+    TreeNode(T element){
+        data=element;
+    }
+
+    ~TreeNode(){
+        for(int i=0;i<children.size();i++){
+            delete(children[i]);
+        }
+    }
+};
+
+TreeNode<int>* takeInputLevelWise(){
+   int rootData;
+   cout<<"Enter the root"<<endl;
+   cin>>rootData;
+   TreeNode<int> *root = new TreeNode<int>(rootData);
+   queue<TreeNode<int>*> pendingNodes;
+   pendingNodes.push(root);
+   while(pendingNodes.size()!=0){
+
+    int n;
+    cout<<"Enter the number of children of "<<pendingNodes.front()->data <<endl;
+    cin>>n;
+    for(int i=0;i<n;i++){
+        int childData;
+        cout<<"Enter the "<<i<<"th child of "<<pendingNodes.front()->data<<endl;
+        cin>>childData;
+        TreeNode<int> *child = new TreeNode<int>(childData);
+        pendingNodes.front()->children.push_back(child);
+        pendingNodes.push(child);
+    }
+    pendingNodes.pop();
+   }
+   return root;
+}
+
+void printTree(TreeNode<int>* root){
+    if(root==NULL)
+        return;
+   cout<<root->data<<": ";
+   for(int i =0;i<root->children.size();i++){
+    cout<<root->children[i]->data<<",";
+   }
+   cout<<endl;
+   for(int i =0;i<root->children.size();i++){
+    printTree(root->children[i]);
+   }
+}
+
+void deleteTree(TreeNode<int>* root){
+    for(int i=0;i<root->children.size();i++){
+        deleteTree(root->children[i]);
+    }
+    delete root;
+}
+
+int main(){
+
+    // 10 3 20 30 40 2 50 60 2 70 80 0 0 0 0 1 90 0
+    TreeNode<int> *root = takeInputLevelWise();
+    printTree(root);
+    //deleteTree(root);
+    delete(root);
+}
