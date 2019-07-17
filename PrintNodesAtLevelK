@@ -1,0 +1,72 @@
+#include<iostream>
+#include<queue>
+#include<vector>
+using namespace std;
+
+template <typename T>
+class TreeNode{
+public:
+    T data;
+    vector<TreeNode*> children;
+    TreeNode(T element){
+        data=element;
+    }
+};
+
+
+TreeNode<int>* takeInputLevelWise(){
+   int rootData;
+   cout<<"Enter the root"<<endl;
+   cin>>rootData;
+   TreeNode<int> *root = new TreeNode<int>(rootData);
+   queue<TreeNode<int>*> pendingNodes;
+   pendingNodes.push(root);
+   while(pendingNodes.size()!=0){
+
+    int n;
+    cout<<"Enter the number of children of "<<pendingNodes.front()->data <<endl;
+    cin>>n;
+    for(int i=0;i<n;i++){
+        int childData;
+        cout<<"Enter the "<<i<<"th child of "<<pendingNodes.front()->data<<endl;
+        cin>>childData;
+        TreeNode<int> *child = new TreeNode<int>(childData);
+        pendingNodes.front()->children.push_back(child);
+        pendingNodes.push(child);
+    }
+    pendingNodes.pop();
+   }
+   return root;
+}
+
+void printTree(TreeNode<int>* root){
+    if(root==NULL)
+        return;
+   cout<<root->data<<": ";
+   for(int i =0;i<root->children.size();i++){
+    cout<<root->children[i]->data<<",";
+   }
+   cout<<endl;
+   for(int i =0;i<root->children.size();i++){
+    printTree(root->children[i]);
+   }
+}
+
+void printAtLevelK(TreeNode<int>* root, int k){
+    if(root==NULL)
+        return;
+    if(k==0)
+        cout<<root->data<<endl;
+    for(int i =0;i<root->children.size();i++){
+        printAtLevelK(root->children[i], k-1);
+    }
+}
+
+int main(){
+
+    TreeNode<int> *root = takeInputLevelWise();
+    printTree(root);
+    cout<<"Nodes at level 1:"<<endl;
+    printAtLevelK(root,1);
+}
+    
