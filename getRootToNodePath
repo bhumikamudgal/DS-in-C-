@@ -1,0 +1,105 @@
+#include<iostream>
+#include "BinaryTreeNode.h"
+#include<queue>
+using namespace std;
+
+template <typename T>
+class BinaryTreeNode{
+public:
+    T data;
+    BinaryTreeNode* left;
+    BinaryTreeNode* right;
+
+    BinaryTreeNode(T element){
+        this->data = element;
+        left = NULL;
+        right = NULL;
+    }
+
+    ~BinaryTreeNode(){
+        delete left;
+        delete right;
+        //Delete can be called on NULL
+    }
+};
+
+void printTree(BinaryTreeNode<int>* root){
+    if(root==NULL)
+        return;
+    cout<<root->data<<": ";
+    if(root->left!=NULL)
+        cout<<"L"<<root->left->data<<" ";
+    if(root->right!=NULL)
+        cout<<"R"<<root->right->data;
+    cout<<endl;
+    printTree(root->left);
+    printTree(root->right);
+}
+
+BinaryTreeNode<int>* takeInputLevelWise(){
+    int rootData;
+    cout<<"Enter root data "<<endl;
+    cin>>rootData;
+    if(rootData == -1)
+        return NULL;
+
+    BinaryTreeNode<int>* root = new BinaryTreeNode<int>(rootData);
+    queue<BinaryTreeNode<int>*> pendingNodes;
+    pendingNodes.push(root);
+    while(pendingNodes.size()!=0){
+        cout<<"Enter the left child of "<<pendingNodes.front()->data<<endl;
+        int leftChildData;
+        cin>>leftChildData;
+        if(leftChildData!=-1){
+            BinaryTreeNode<int>* leftChild = new BinaryTreeNode<int>(leftChildData);
+            pendingNodes.push(leftChild);
+            pendingNodes.front()->left=leftChild;
+        }
+         cout<<"Enter the right child of "<<pendingNodes.front()->data<<endl;
+        int rightChildData;
+        cin>>rightChildData;
+        if(rightChildData!=-1){
+            BinaryTreeNode<int>* rightChild = new BinaryTreeNode<int>(rightChildData);
+            pendingNodes.push(rightChild);
+            pendingNodes.front()->right=rightChild;
+        }
+        pendingNodes.pop();
+    }
+    return root;
+}
+
+vector<int>* getRootToNodePath(BinaryTreeNode<int>* root, int data){
+    if(root==NULL)
+        return NULL;
+    if(root->data==data){
+        vector<int>* output = new vector<int>();
+        output->push_back(root->data);
+        return output;
+    }
+    vector<int>* leftOutput = getRootToNodePath(root->left,data);
+    if(leftOutput!=NULL){
+        leftOutput->push_back(root->data);
+        return leftOutput;
+    }
+    vector<int>* rightOutput = getRootToNodePath(root->right,data);
+    if(rightOutput!=NULL){
+        rightOutput->push_back(root->data);
+        return rightOutput;
+    }
+    else{
+        return NULL;
+    }
+}
+
+int main(){
+    // 1 2 3 4 5 6 7 -1 -1 -1 -1 8 9 -1 -1 -1 -1 -1 -1
+
+    BinaryTreeNode<int>* root = takeInputLevelWise();
+    printTree(root);
+    cout<<endl;
+  
+    vector<int>* output = getRootToNodePath(root,8);
+    for(int i=0;i<output->size();i++){
+        cout<<output->at(i)<<endl;
+    }
+}
