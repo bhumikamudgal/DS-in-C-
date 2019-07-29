@@ -1,0 +1,23 @@
+#include <iostream>
+#include<cmath>
+#define mod 1000000007
+using namespace std;
+
+long balancedBTs(int h) {
+    if(h==0)
+        return 1;
+    if(h==1)
+        return 1;
+//    int mod = (int) pow(10,9) + 7;
+    long x = (int)balancedBTs(h-1)%mod;
+    long y = (int)balancedBTs(h-2)%mod;
+    return ((x*x)+(x*y)+(x*y))%mod;
+}
+
+
+int main() {
+    int h;
+    cin >> h;
+    int ans = balancedBTs(h);
+    cout << ans << endl;
+}
