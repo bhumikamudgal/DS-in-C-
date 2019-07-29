@@ -1,0 +1,39 @@
+#include<iostream>
+#include<climits>
+using namespace std;
+
+int countStepsTo1(int n){
+    int *ans = new int[n+1];
+    
+    ans[0]=0;
+    ans[1]=0;
+    ans[2]=1;
+    ans[3]=1;
+    
+    for(int i=4;i<=n;i++){
+        int x=INT_MAX,y=INT_MAX,z=INT_MAX;
+        if(i%3==0){
+            x=ans[i/3]+1;
+        }
+        if(i%2==0){
+            y=ans[i/2]+1;
+            
+        }
+        z=ans[i-1]+1;
+        
+        ans[i]=min(x,min(y,z));
+        
+    }
+    return ans[n];
+}
+
+
+int main(){
+
+  int n;
+  cin  >> n;
+  cout << countStepsTo1(n) << endl;
+
+}
+
+
