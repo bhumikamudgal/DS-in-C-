@@ -1,0 +1,46 @@
+#include<iostream>
+using namespace std;
+#include <vector>
+
+#include<unordered_map>
+vector<int> longestSubsequence(int *input, int n){
+    unordered_map<int,bool> m;
+    int maxLength=1;
+    int start = 0;
+    for(int i=0;i<n;i++){
+        if(m.count(input[i])==0)
+        m[input[i]]=true;
+    }
+    
+    for(int i=0;i<n;i++){
+      while(m[st+1]!=0){
+            max++;
+            st++;
+    }
+    if(max>maxLength){
+            maxLength = max;
+            start = input[i];
+        }
+        }
+    
+    
+    vector<int> v;
+    for(int i=0;i<maxLength;i++){
+        v.push_back(start);
+        start++;
+    }
+    return v;
+}
+
+int main() {
+	int n;
+	cin >> n;
+	int *input = new int[n];
+	for(int i = 0; i < n; i++){
+		cin >> input[i];
+	}
+	vector<int> output = longestSubsequence(input, n);
+	for(int i = 0; i < output.size(); i++) {
+		cout << output[i] << endl;
+	}
+}
