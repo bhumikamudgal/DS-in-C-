@@ -1,0 +1,30 @@
+#include<iostream>
+using namespace std;
+
+int minCount(int n){
+    int *ans = new int[n+1];
+    ans[0]=0;
+    ans[1]=1;
+    ans[2]=2;
+    ans[3]=3;
+    for(int i=4;i<=n;i++){
+        int small = INT_MAX;
+        int j=1;
+        while((j*j)<=i){
+           int x = ans[i-(j*j)];
+            small = min(x+1,small);
+            j++;
+        }
+        ans[i]=small;
+    }
+    return ans[n];
+}
+
+int main(){
+    
+    int num;
+    cin >> num;
+    cout << minCount(num);
+    
+}
+
