@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cmath>
+#define mod 1000000007
+using namespace std;
+long binaryTreesOfHeightH(int h) {
+    long *ans = new long[h+1];
+    ans[0]=1;
+    ans[1]=1;
+    ans[2]=3;
+    ans[3]=15;
+    //int mod = (int) pow(10,9)+7;
+    for(int i=2;i<=h;i++){
+        long x = ans[i-1]%mod;
+        long y = ans[i-2]%mod;
+        long temp1 =  (x*x)%mod;
+        long temp2 =  (2*x*y)%mod;
+        ans[i]= ((temp1)+(temp2))%mod;
+    }
+    return ans[h];
+}
+
+
+
+int main() {
+    int h;
+    cin >> h;
+    int ans = binaryTreesOfHeightH(h);
+    ans = ans % ((int)(pow(10, 9)) + 7);
+    cout << ans << endl;
+}
