@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int editDistance(string s1, string s2){
+
+  if(s1.size()==0 || s2.size()==0){
+      return max(s1.size(),s2.size());
+  }
+    int ans=0;
+    if(s1[0]==s2[0]){
+        ans = editDistance(s1.substr(1),s2.substr(1));
+    }
+    else{
+        int a = editDistance(s1,s2.substr(1));
+        int b = editDistance(s1.substr(1),s2);
+        int c = editDistance(s1.substr(1),s2.substr(1));
+        ans = min(a+1,min(b+1,c+1));
+    }
+    return ans;
+}
+
+int main(){
+
+  string s1;
+  string s2;
+
+  cin >> s1;
+  cin >> s2;
+
+  cout << editDistance(s1,s2) << endl;
+
+}
