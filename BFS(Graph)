@@ -1,0 +1,49 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+void dfs(int **edge, int v, int sv, bool *visited, queue<int> q){
+    q.push(sv);
+    
+    while(q.size()){
+        visited[q.front()]=true;
+        cout<<q.front()<<" ";
+    for(int i=0;i<v;i++){
+        if(i==q.front()){
+            continue;
+        }
+        if(visited[i]==true){
+            continue;
+        }
+        if(edge[q.front()][i]==1){
+            q.push(i);
+            visited[i]=true;
+        }
+    }
+    q.pop();
+    }
+}
+
+int main() {
+    int v, e;
+    cin >> v >> e;
+    int **edge=new int*[v];
+    for(int i=0;i<v;i++){
+        edge[i]=new int[v];
+        for(int j=0;j<v;j++)
+            edge[i][j]=0;
+    }
+    for(int i=0;i<e;i++){
+        int f,s;
+        cin>>f>>s;
+        edge[f][s]=1;
+        edge[s][f]=1;
+    }
+    bool *visited = new bool[v];
+    for(int i=0;i<v;i++){
+        visited[i]=false;
+    }
+    queue<int> q;
+    dfs(edge,v,0,visited,q);
+  return 0;
+}
