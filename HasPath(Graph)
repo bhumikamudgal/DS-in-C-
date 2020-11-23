@@ -25,6 +25,9 @@ bool hasPath(int **edge,int n,int s,int e){
             }
         }
     }
+    // delete visited array
+    delete [] visited;
+    
     return false;
 }
 
@@ -53,4 +56,11 @@ int main() {
     else{
         cout<<"false";
     }
+    
+    //delete 2d array edges
+    
+    for(int i = 0 ; i < n ; i++){
+        delete[] edges[i];
+    }
+    delete [] edges;
 }
