@@ -54,7 +54,7 @@ void printTree(TreeNode<int>* root){
 int numNodes(TreeNode<int>* root){
     int smallNum=0;
     for(int i=0;i<root->children.size();i++){
-       smallNum +6= numNodes(root->children[i]);
+       smallNum += numNodes(root->children[i]);
     }
     return smallNum+1;
 }
