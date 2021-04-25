@@ -21,7 +21,7 @@ bool checkRedundantBrackets(char *input) {
         s.pop();
         count++;
         }
-        if(count==0){
+        if(count==0||count==1){
             return true;
         }
         else{
