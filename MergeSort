@@ -32,8 +32,9 @@ void merge(int input[], int s, int mid, int e) {
 }
 
 void mergeSort1(int input[],int s, int e) {
-    if(s>=e)
-        return;
+    if(s>=e){
+      return;
+      }
     
     int mid = (s+e)/2;
     
